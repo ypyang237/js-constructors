@@ -147,6 +147,43 @@
    * @return {boolean} success  Whether mana was successfully spent.
    */
 
+      this.invoke = function(spell, target) {
+
+        if(spell instanceof Spell && !(spell instanceof DamageSpell)) {
+          //cast the spell
+          if(this.spendMana(spell.cost)){
+              return true;
+           }
+           return false;
+        }
+
+
+
+        if(spell instanceof DamageSpell && target instanceof Spellcaster) {
+          //cast the spell
+
+          if(this.spendMana(spell.cost)) {
+              target.inflictDamage(spell.damage);
+              return true;
+            }
+
+            return false;
+
+          }
+
+        else
+            {
+            return false;
+            }
+
+
+
+
+          };
+
+
+
+
 
 
   /**
@@ -177,3 +214,25 @@
    */
 
   }
+
+  var lina = new Spellcaster('Lina', 300, 250);
+  var fierySoul = new Spell('fiery', 100, 'burns');
+  var pugna = new Spellcaster('pugna', 299, 249);
+  var lagunaBlade = new DamageSpell('lagunaBlade', 100, 150, 'kills');
+
+/*
+  console.log(lina);
+  // console.log(fierySoul);
+
+  console.log(lina.invoke(fierySoul));
+  console.log(lina);
+
+*/
+
+
+  // console.log(fierySoul);
+ console.log(pugna);
+  lina.invoke(lagunaBlade, pugna);
+console.log(pugna);
+
+
